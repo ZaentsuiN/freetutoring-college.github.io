@@ -48,7 +48,17 @@ function emailFormData() {
                     return; // Stop execution if a field is empty
                 }
             }
-
+// Ask for confirmation before submitting
+const userConfirmed = confirm('Are you sure you want to submit the form?');
+    if (userConfirmed) {
+        // If the user clicks "OK", submit the form
+        alert('Form submitted successfully!');
+        this.submit(); // You can submit the form programmatically here
+    } else {
+        // If the user clicks "Cancel", do nothing
+        alert('Form submission canceled.');
+        return;
+    }
             // Format the email body text
             const emailBody = `
 Name: ${formData.name}
