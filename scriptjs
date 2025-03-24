@@ -2,10 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Form Submission</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Data Handler</title>
+    <style>
+        /* Optional: Basic styling for better readability */
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        label {
+            display: inline-block;
+            width: 100px; /* Adjust as needed */
+            margin-bottom: 5px;
+            vertical-align: top;
+        }
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 250px; /* Adjust as needed */
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box; /* Include padding and border in element's total width */
+        }
+        textarea {
+            height: 80px; /* Adjust as needed */
+            vertical-align: top;
+        }
+        button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
+
     <h1>Fill the Form</h1>
+
     <form id="dataForm">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required><br><br>
@@ -25,63 +60,84 @@
         <label for="availability">Availability:</label>
         <input type="text" id="availability" name="availability" required><br><br>
 
-        <!-- Buttons -->
         <button type="button" onclick="downloadFormData()">Download as TXT</button>
-        <button type="button" onclick="emailFormData()">Email Form Data</button>
+        <button type="button" onclick="emailFormData()">Send via Email</button>
     </form>
 
     <script>
-        // Function to collect form data and validate it
-        function getFormData() {
-            const fields = ['name', 'email', 'subject', 'message', 'course', 'availability'];
-            const formData = {};
+        // Helper function to get and validate form data
+        function getAndValidateFormData() {
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                subject: document.getElementById('subject').value.trim(),
+                message: document.getElementById('message').value.trim(),
+                course: document.getElementById('course').value.trim(),
+                availability: document.getElementById('availability').value.trim(),
+            };
 
-            for (const field of fields) {
-                const value = document.getElementById(field).value.trim();
-                if (!value) {
-                    alert(`Please fill in the ${field} field.`);
-                    return null; // Return null if validation fails
+            // Validation: Ensure all fields are filled
+            for (const key in formData) {
+                // Check if the field exists in the form before validating
+                // (Handles cases where a field might be removed from HTML)
+                if (document.getElementById(key) && !formData[key]) {
+                    // Capitalize first letter of the key for the alert message
+                    const fieldName = key.charAt(0).toUpperCase() + key.slice(1);
+                    alert(`Please fill in the ${fieldName} field.`);
+                    return null; // Indicate validation failure
                 }
-                formData[field] = value;
             }
-
-            return formData;
+            return formData; // Return collected data if valid
         }
 
-        // Function to download form data as a TXT file
+        // Function to trigger download as TXT
         function downloadFormData() {
-            const formData = getFormData();
+            const formData = getAndValidateFormData();
             if (!formData) return; // Stop if validation failed
 
-            const dataText = `
-Name: ${formData.name}
-Email: ${formData.email}
-Subject: ${formData.subject}
-Message: ${formData.message}
-Course: ${formData.course}
-Availability: ${formData.availability}
-            `.trim();
+            // Format the data for the text file
+            const fileContent = `Name: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\nMessage: ${formData.message}\nCourse: ${formData.course}\nAvailability: ${formData.availability}\n`;
 
-            const blob = new Blob([dataText], { type: 'text/plain' });
-            const downloadLink = document.createElement('a');
-            downloadLink.href = URL.createObjectURL(blob);
-            downloadLink.download = 'formData.txt';
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
+            // Create a Blob (Binary Large Object)
+            const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+
+            // Create a temporary link element
+            const link = document.createElement("a");
+
+            // Create a URL for the Blob
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+
+            // Set the download attribute with a filename
+            // Use subject or a default name for the file
+            const filename = (formData.subject || "formData") + ".txt";
+            link.setAttribute("download", filename.replace(/[^a-z0-9._-]/gi, '_')); // Sanitize filename
+
+            // Append link to body, click it, then remove it
+            link.style.visibility = 'hidden'; // Hide the link
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+             // Optional: Revoke the object URL after a short delay to ensure download starts
+             setTimeout(() => URL.revokeObjectURL(url), 100);
+
+             alert('Data prepared for download!'); // Feedback to user
         }
 
-        // Function to generate email with form data
+        // Function to open email client with form data
         function emailFormData() {
-            const formData = getFormData();
+            const formData = getAndValidateFormData();
             if (!formData) return; // Stop if validation failed
 
-            const userConfirmed = confirm('Are you sure you want to submit the form via email?');
+            // Ask for confirmation before proceeding
+            const userConfirmed = confirm('Are you sure you want to prepare this data for emailing?');
             if (!userConfirmed) {
-                alert('Form submission canceled.');
-                return;
+                alert('Email preparation canceled.');
+                return; // Stop if user cancels
             }
 
+            // Format the email body text
             const emailBody = `
 Name: ${formData.name}
 Email: ${formData.email}
@@ -89,22 +145,32 @@ Subject: ${formData.subject}
 Message: ${formData.message}
 Course: ${formData.course}
 Availability: ${formData.availability}
-            `.trim();
+            `.trim(); // .trim() removes leading/trailing whitespace including the initial newline
 
-            const mailtoLink = `
-mailto:tutoring@example.com
-?subject=${encodeURIComponent(formData.subject)}
-&body=${encodeURIComponent(emailBody)}
-            `.replace(/\s+/g, '');
+            // Encode the subject and body for the mailto link
+            const encodedBody = encodeURIComponent(emailBody);
+            const encodedSubject = encodeURIComponent(formData.subject || "Form Submission"); // Use subject or default
 
-            // Trigger the user's default email client
+            // Generate the mailto link (replace with your actual target email)
+            const mailtoLink = `mailto:tutoring@example.com?subject=${encodedSubject}&body=${encodedBody}`;
+
+            // Open the mailto link (trigger email client)
+            // Check if the link is too long (browsers/email clients have limits)
+            if (mailtoLink.length > 2000) { // Common limit, can vary
+                 alert("The form data is too long to be sent via email link. Please use the download option.");
+                 return;
+            }
+
             window.location.href = mailtoLink;
 
-            alert('Email client has been opened. Please review and send your email.');
+            // No need for form submission confirmation here, as the user already confirmed
+            // The actual sending happens in their email client.
         }
     </script>
+
 </body>
 </html>
+
 
 
 
