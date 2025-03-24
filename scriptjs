@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Form Data as TXT</title>
+    <title>Form Submission</title>
 </head>
 <body>
     <h1>Fill the Form</h1>
@@ -26,40 +25,63 @@
         <label for="availability">Availability:</label>
         <input type="text" id="availability" name="availability" required><br><br>
 
+        <!-- Buttons -->
         <button type="button" onclick="downloadFormData()">Download as TXT</button>
+        <button type="button" onclick="emailFormData()">Email Form Data</button>
     </form>
 
     <script>
-function emailFormData() {
-            // Collect form data
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value,
-                course: document.getElementById('course').value,
-                availability: document.getElementById('availability').value,
-            };
+        // Function to collect form data and validate it
+        function getFormData() {
+            const fields = ['name', 'email', 'subject', 'message', 'course', 'availability'];
+            const formData = {};
 
-            // Validation: Ensure all fields are filled
-            for (const key in formData) {
-                if (!formData[key].trim()) {
-                    alert(`Please fill in the ${key} field.`);
-                    return; // Stop execution if a field is empty
+            for (const field of fields) {
+                const value = document.getElementById(field).value.trim();
+                if (!value) {
+                    alert(`Please fill in the ${field} field.`);
+                    return null; // Return null if validation fails
                 }
+                formData[field] = value;
             }
-// Ask for confirmation before submitting
-const userConfirmed = confirm('Are you sure you want to submit the form?');
-    if (userConfirmed) {
-        // If the user clicks "OK", submit the form
-        alert('Form submitted successfully!');
-        this.submit(); // You can submit the form programmatically here
-    } else {
-        // If the user clicks "Cancel", do nothing
-        alert('Form submission canceled.');
-        return;
-    }
-            // Format the email body text
+
+            return formData;
+        }
+
+        // Function to download form data as a TXT file
+        function downloadFormData() {
+            const formData = getFormData();
+            if (!formData) return; // Stop if validation failed
+
+            const dataText = `
+Name: ${formData.name}
+Email: ${formData.email}
+Subject: ${formData.subject}
+Message: ${formData.message}
+Course: ${formData.course}
+Availability: ${formData.availability}
+            `.trim();
+
+            const blob = new Blob([dataText], { type: 'text/plain' });
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = 'formData.txt';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        // Function to generate email with form data
+        function emailFormData() {
+            const formData = getFormData();
+            if (!formData) return; // Stop if validation failed
+
+            const userConfirmed = confirm('Are you sure you want to submit the form via email?');
+            if (!userConfirmed) {
+                alert('Form submission canceled.');
+                return;
+            }
+
             const emailBody = `
 Name: ${formData.name}
 Email: ${formData.email}
@@ -69,52 +91,401 @@ Course: ${formData.course}
 Availability: ${formData.availability}
             `.trim();
 
-            // Encode the subject and body for the mailto link
-            const encodedBody = encodeURIComponent(emailBody);
-            const encodedSubject = encodeURIComponent(formData.subject || "Form Submission");
+            const mailtoLink = `
+mailto:tutoring@example.com
+?subject=${encodeURIComponent(formData.subject)}
+&body=${encodeURIComponent(emailBody)}
+            `.replace(/\s+/g, '');
 
-            // Generate the mailto link
-            const mailtoLink = `mailto:tutoring@example.com?subject=${encodedSubject}&body=${encodedBody}`;
-
-            // Open the mailto link (trigger email client)
+            // Trigger the user's default email client
             window.location.href = mailtoLink;
-}
 
-
-        function downloadFormData() {
-            // Collect form data
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value,
-                course: document.getElementById('course').value,
-                availability: document.getElementById('availability').value,
-            };
-
-            // Format data as plain text
-            const textContent = `
-Name: ${formData.name}
-Email: ${formData.email}
-Subject: ${formData.subject}
-Message: ${formData.message}
-Course: ${formData.course}
-Availability: ${formData.availability}
-            `;
-
-            // Create a blob with the text content
-            const blob = new Blob([textContent], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-
-            // Create a temporary anchor element to trigger the download
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'formData.txt'; // File name
-            a.click();
-
-            // Revoke the URL to free up memory
-            URL.revokeObjectURL(url);
+            alert('Email client has been opened. Please review and send your email.');
         }
+    </script>
+</body>
+</html>
+
+
+
+Jump to Sections
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jump to Sections Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        section {
+            margin-bottom: 30px;
+        }
+        
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: none;
+            transition: opacity 0.3s;
+        }
+        
+        #back-to-top:hover {
+            background-color: #555;
+        }
+        
+        .table-of-contents {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .table-of-contents h2 {
+            margin-top: 0;
+        }
+        
+        .table-of-contents ul {
+            padding-left: 20px;
+        }
+        
+        .table-of-contents li {
+            margin-bottom: 8px;
+        }
+        
+        .table-of-contents a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        
+        .table-of-contents a:hover {
+            text-decoration: underline;
+padding: 8px 15px;
+            cursor: pointer;
+background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 id="top">Page Title</h1>
+        
+        <!-- Table of Contents -->
+        <div class="table-of-contents">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#section1">Section 1</a></li>
+                <li><a href="#section2">Section 2</a></li>
+                <li><a href="#section3">Section 3</a></li>
+                <li><a href="#section4">Section 4</a></li>
+                <li><a href="#section5">Section 5</a></li>
+            </ul>
+        </div>
+        
+        <section id="section1">
+            <h2>Section 1</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </section>
+        
+        <section id="section2">
+            <h2>Section 2</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </section>
+        
+        <section id="section3">
+            <h2>Section 3</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </section>
+        
+        <section id="section4">
+            <h2>Section 4</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </section>
+        
+        <section id="section5">
+            <h2>Section 5</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </section>
+    </div>
+    
+    <button id="back-to-top" title="Back to Top">Back to Top</button>
+
+    <script>
+        // Get the button
+        const backToTopButton = document.getElementById("back-to-top");
+        
+        // Show the button when the user scrolls down 300px from the top
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
+        
+        // Scroll back to the top when the button is clicked
+        backToTopButton.addEventListener("click", function() {
+            // For Safari
+            document.body.scrollTop = 0;
+            // For Chrome, Firefox, IE and Opera
+            document.documentElement.scrollTop = 0;
+        });
+    </script>
+</body>
+</html>
+
+
+
+Dropdown Navigation
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Navigation Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        section {
+            margin-bottom: 30px;
+        }
+        
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: none;
+            transition: opacity 0.3s;
+        }
+        
+        #back-to-top:hover {
+            background-color: #555;
+        }
+        
+        /* Dropdown Navigation Styles */
+        .dropdown-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+        }
+        
+        .dropdown-button {
+            background-color: #0066cc;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dropdown-button:hover {
+            background-color: #0052a3;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            padding: 10px;
+        }
+        
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .show {
+            display: block;
+        }
+        
+        .arrow {
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(45deg);
+            transition: transform 0.3s;
+        }
+        
+        .arrow-up {
+            transform: rotate(-135deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 id="top">Page Title</h1>
+        
+        <!-- Dropdown Navigation -->
+        <div class="dropdown-nav">
+            <button class="dropdown-button" onclick="toggleDropdown()">
+                Jump to Section <span class="arrow" id="dropdown-arrow"></span>
+            </button>
+            <div class="dropdown-content" id="dropdown-content">
+                <a href="#section1">Section 1</a>
+                <a href="#section2">Section 2</a>
+                <a href="#section3">Section 3</a>
+                <a href="#section4">Section 4</a>
+                <a href="#section5">Section 5</a>
+            </div>
+        </div>
+        
+        <section id="section1">
+            <h2>Section 1</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </section>
+        
+        <section id="section2">
+            <h2>Section 2</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </section>
+        
+        <section id="section3">
+            <h2>Section 3</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </section>
+        
+        <section id="section4">
+            <h2>Section 4</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </section>
+        
+        <section id="section5">
+            <h2>Section 5</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </section>
+    </div>
+    
+    <button id="back-to-top" title="Back to Top">Back to Top</button>
+
+    <script>
+        // Back to top button functionality
+        const backToTopButton = document.getElementById("back-to-top");
+        
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
+        
+        backToTopButton.addEventListener("click", function() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        });
+        
+        // Dropdown functionality
+        function toggleDropdown() {
+            document.getElementById("dropdown-content").classList.toggle("show");
+            document.getElementById("dropdown-arrow").classList.toggle("arrow-up");
+        }
+        
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-button') && !event.target.matches('.arrow')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var arrows = document.getElementsByClassName("arrow");
+                
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+                
+                for (var i = 0; i < arrows.length; i++) {
+                    var arrow = arrows[i];
+                    if (arrow.classList.contains('arrow-up')) {
+                        arrow.classList.remove('arrow-up');
+                    }
+                }
+            }
+        }
+        
+        // Close dropdown after clicking a link
+        document.querySelectorAll('.dropdown-content a').forEach(item => {
+            item.addEventListener('click', event => {
+                document.getElementById("dropdown-content").classList.remove("show");
+                document.getElementById("dropdown-arrow").classList.remove("arrow-up");
+            });
+        });
     </script>
 </body>
 </html>
