@@ -1,190 +1,285 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>demo</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><path d=%22M19.1,5.1c-2.4-1-5.3-0.2-6.8,1.6L12,7.3l-0.3-0.6C9.6,3.9,5.7,3.8,3.9,7.2c-1.6,2.9-0.1,6.6,2.8,7.9  l6.4,3.5l6.4-3.5c2.9-1.3,4.4-4.9,2.8-7.9C20.8,6.3,20,5.7,19.1,5.1z M12,20.1l-6.4-3.5c-2.4-1.1-3.6-4-2.3-6.3  c1.3-2.3,5.2-2.4,6.8-0.1l0.9,1l0.9-1c1.6-2.3,5.5-2.2,6.8,0.1c1.3,2.3,0.2,5.2-2.3,6.3L12,20.1z%22 fill=%22%23007bff%22/></svg>" type="image/svg+xml">
-<style> 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: white;
-}
-.container {
-        max-width: 85%;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #f4f4f4;
-        box-shadow: 0 0 10px rgb(225, 21, 21);
-        border-radius: 2%;
-}
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 15px;
-    background: linear-gradient(45deg, #a8bfd7, #a2b8f6);
-}
-.profile {
-    display: flex;
-    align-items: center;
-}
-.profile img {
-    width: 180px;
-    height: 180px;
-    border-radius: 20%;
-    margin-right: 15px;
-}
-h1 {
-    margin: 15px;
-    font-size: 24px;
-    color: #404040;
-}
-.contact-info p {
-    margin: 5px 5px;
-    font-size: 14px;
-}
-section {
-    margin-top: 20px;
-    padding-bottom: 15px;
-    border-bottom: 3px solid #ddd;
-}
-h2 {
-    line-height: 1.6;
-    color: #333;
-    font-size: 20px;
-}
-h3 {
-    line-height: 1.6;
-    color: #333;
-    font-size: 17px;
-}
-p {
-    color: rgb(129, 17, 7);
-}
-ul {
-    padding-left: 25px;
-}
-footer {
-    text-align: center;
-    padding: 15px;
-    font-size: 14px;
-    color: rgb(9, 7, 7);
-    bottom: 10px;
-}
-form {
-         margin-top: 20px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessible Tabs Example</title>
+  <style>
+    /* Just some minimal styling so it doesn't look awful */
+    body { font-family: sans-serif; }
+    [role="tablist"] {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid #ccc;
+    }
+    [role="tab"] {
+      padding: 8px 16px;
+      border: none;
+      background: #f0f0f0;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    [role="tab"][aria-selected="true"] {
+      background: #fff;
+      border-bottom-color: blue;
+    }
+    [role="tabpanel"] {
+      padding: 16px;
+      border: 1px solid #ddd;
+      margin-top: 8px;
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: 1px solid #ccc;
+    }
+    .gradio-mockup {
+      width: 100%;
+      height: 300px;
+      background: linear-gradient(to bottom, #eee, #fff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #ccc;
+    }
+	:root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --primary-color: #4a6fa5;
+            --secondary-color: #ff7e5f;
+            --section1-color: #e6f7ff;
+            --section2-color: #fff5e6;
         }
-label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --primary-color: #6b9bcf;
+            --secondary-color: #ff9f7f;
+            --section1-color: #00334d;
+            --section2-color: #332100;
         }
-input, select, textarea {
-            width: 90%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
         }
-button {
-            background-color: #07de11;
-            color: white;
-            padding: 10px 20px;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin: 0;
+        } 
+
+        .theme-toggle {
+            background: var(--secondary-color);
             border: none;
-            border-radius: 4px;
+            padding: 8px 15px;
+            border-radius: 20px;
             cursor: pointer;
+            font-weight: bold;
+            color: white;
+            transition: transform 0.2s;
         }
-button:hover {
-            background-color: #3e8e41;
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
         }
-</style> 
+
+        .section {
+            padding: 60px 0;
+            margin: 30px 0;
+            border-radius: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .section-1 {
+            background-color: var(--section1-color);
+        }
+
+        .section-2 {
+            background-color: var(--section2-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .section-content {
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 40px 20px;
+            }
+        }
+        
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Free College Tutoring</h1>
-    </header>
-    <section class="profile">
-        <img src="http://bbs.romman.com/uc_server/images/noavatar_middle.gif" alt="Profile Picture">
-        </section>
-        <section class="contact-info">
-            <h2>Contact</h2>
-                <p>📅 1996.11.06</p>
-                <p>📍  NYC</p>
-                <p>📞 +86 100181018</p>
-                <p>📧 <a href="mailto:tutoring@example.com">tutoring@example.com</a></p>
-        </section>
-        <section class="education">
-            <h2>Education</h2>
-            <p><strong>华南师范大学 (2005.07 - 2009.06) </strong></p>
-            <p>专业: 视觉传达设计</p>
-            <p>GPA: 3.72/4</p>
-        </section>
-        <section class="experience">
-            <h2>Experience</h2>
-            <div>
-                <h3>广州某科技有限公司</h3>
-                <p>2012.06 - 至今</p>
-                <ul>
-                    <li>负责公司宣传物料设计，包括海报、宣传册、UI界面等。</li>
-                    <li>协助市场团队进行品牌推广设计。</li>
-                    <li>优化产品用户体验，提高界面美观度。</li>
-                </ul>
-            </div>
-        </section>
-        <section class="skills">
-            <h2>Skills</h2>
-            <ul>
-                <li>📌 Photoshop</li>
-                <li>📌 Illustrator</li>
-                <li>📌 Premiere</li>
-                <li>📌 Office</li>
-            </ul>
-        </section>
-        <section class="certifications">
-            <h2>Certifications</h2>
-            <ul>
-                <li>📌 全国计算机等级考试 (CET-4/6)</li>
-                <li>📌 Illustrator</li>
-                <li>📌 Premiere</li>
-                <li>📌 Office</li>
-            </ul>
-        </section>
-    <div class="container">
-        <h2>About Our Tutoring Service</h2>
-        
-        <p>We offer free tutoring services to all college students. Our tutors are experienced and ready to help you with any subject. Sign up below to get started!</p>
-        <h2>Sign Up for Tutoring</h2>
-        <form action="#" method="post">
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+<!-- The Tab List -->
+<div role="tablist" aria-label="Main navigation tabs">
+  <button id="chat-tab" 
+          role="tab" 
+          aria-selected="true" 
+          aria-controls="chat-panel"
+          class="tab-button">
+    💬 Chat
+  </button>
+  <button id="iframe-tab" 
+          role="tab" 
+          aria-selected="false" 
+          aria-controls="iframe-panel"
+          class="tab-button">
+    🌐 Iframe Example
+  </button>
+  <button id="gradio-tab" 
+          role="tab" 
+          aria-selected="false" 
+          aria-controls="gradio-panel"
+          class="tab-button">
+    🤖 Gradio App
+  </button>
+  <button id="disabled-tab" 
+          role="tab" 
+          aria-selected="false" 
+          aria-disabled="true"
+          aria-controls="disabled-panel"
+          disabled
+          class="tab-button">
+    🚫 Disabled Tab
+  </button>
+</div>
 
-            <label for="course">Course:</label>
-            <input type="text" id="course" name="course" required>
+<!-- The Tab Panels -->
+<div id="chat-panel" role="tabpanel" aria-labelledby="chat-tab">
+  <h2>Chat Panel</h2>
+  <button class="theme-toggle" id="themeToggle">Dark Mode</button>
+  <p>This is the chat interface. Type your messages here... 
+<h1>Accessible Tabs Demo</h1> </p>
+  <textarea rows="5" cols="40" placeholder="Type a message..."></textarea>
+</div>
 
-            <label for="subject">Subject:</label>
-            <select id="subject" name="subject" required>
-                <option value="">Select a subject</option>
-                <option value="math">Mathematics</option>
-                <option value="science">Science</option>
-                <option value="english">English</option>
-                <option value="history">History</option>
-                <option value="other">Other</option>
-            </select>
+<div id="iframe-panel" role="tabpanel" aria-labelledby="iframe-tab" hidden>
+  <h2>Iframe Example</h2>
+  <p>This tab contains a resizable iframe:</p>
+  <iframe id="myIframe" src="https://example.com" frameborder="0"></iframe>
+  <!-- iframe-resizer contentWindow script goes INSIDE the iframe, 
+       but for demo purposes we'll just put it here so you see it -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.1/iframeResizer.contentWindow.min.js"></script>
+</div>
 
-            <label for="message">Additional Information:</label>
-            <textarea id="message" name="message" rows="4"></textarea>
-        </form>
-          <button type="submit">Submit</button>
-        
-    </div>
-    <footer>
-      <h1>&copy; 2023 Free College Tutoring. All Rights Reserved.</h1>
-    </footer>
+<div id="gradio-panel" role="tabpanel" aria-labelledby="gradio-tab" hidden>
+  <h2>Gradio App Mockup</h2>
+  <p>This tab would normally contain a live Gradio app (ML interface), but since that needs a Python backend, here's a static mockup:</p>
+  <div class="gradio-mockup">
+    <img src="https://picsum.photos/500/350" alt="Mock Gradio interface">
+  </div>
+  <!-- Real Gradio would load its JS here -->
+  <script>/* In real life: <script src="https://gradio.s3-us-west-2.amazonaws.com/.../gradio.js"></script></script>
+</div>
+
+<div id="disabled-panel" role="tabpanel" aria-labelledby="disabled-tab" hidden>
+  <h2>Disabled Tab (should never see this)</h2>
+  <p>This content is never shown because the tab is disabled.</p>
+</div>
+
+<script>
+  // JavaScript to make tabs work
+  const tablist = document.querySelector('[role="tablist"]');
+  const tabs = tablist.querySelectorAll('[role="tab"]');
+  const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+
+  // Tab click handler
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      if (tab.getAttribute('aria-disabled') === 'true') return; // ignore disabled tabs
+      activateTab(tab);
+    });
+  });
+
+  // Keyboard navigation (arrow keys)
+  tablist.addEventListener('keydown', (e) => {
+    let newTab;
+    if (e.key === 'ArrowRight') {
+      newTab = Array.from(tabs).find(t => t.tabIndex === (getCurrentTabIndex() + 1)) || tabs[0];
+    } else if (e.key === 'ArrowLeft') {
+      newTab = Array.from(tabs).find(t => t.tabIndex === (getCurrentTabIndex() - 1)) || tabs[tabs.length - 1];
+    }
+    if (newTab && newTab.getAttribute('aria-disabled') !== 'true') {
+      activateTab(newTab);
+      newTab.focus();
+    }
+  });
+
+  function getCurrentTabIndex() {
+    return Array.from(tabs).findIndex(tab => tab.getAttribute('aria-selected') === 'true');
+  }
+
+  function activateTab(newTab) {
+    // Update tab states
+    tabs.forEach(tab => tab.setAttribute('aria-selected', tab === newTab ? 'true' : 'false'));
+    // Show/hide panels
+    tabPanels.forEach(panel => {
+      panel.hidden = (panel.id !== newTab.getAttribute('aria-controls'));
+    });
+  }
+
+  // Initialize iframe-resizer (this goes on the PARENT page, not inside iframe)
+  const myIframe = document.getElementById('myIframe');
+  if (myIframe) {
+    iFrameResize({ log: true }, myIframe);
+  }
+</script>
+<script>
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        let isDarkMode = false; 
+
+        // Check for saved theme preference or use system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            setDarkMode(true);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            setDarkMode(isDarkMode);
+        });
+
+        function setDarkMode(darkMode) {
+            if (darkMode) {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                htmlElement.removeAttribute('data-theme');
+                themeToggle.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'light');
+            }
+            isDarkMode = darkMode;
+        }
+    </script>
 </body>
 </html>
