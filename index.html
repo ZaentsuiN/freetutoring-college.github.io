@@ -2,31 +2,188 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no">
-    <title>Hello World</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            color: #333;
-        }
-        #browserInfo {
-            margin-top: 20px;
-            color: #666;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Colorful Sections</title>
+    <style>/* Basic Reset & Defaults */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    /* Transitions applied to body for smooth global changes */
+    transition: background-color .3s ease, color 0.3s ease;
+}
+
+/* --- Color Variables --- */
+:root {
+    /* Light Mode Colors */
+    --bg-body-light: #f8f9fa;
+    --text-body-light: #212529;
+    --bg-section1-light: #add8e6; /* Light Blue */
+    --text-section1-light: #1a2b33; /* Darker text for light blue */
+    --bg-section2-light: #ffdab9; /* Light Orange (Peach Puff) */
+    --text-section2-light: #4d3319; /* Darker text for light orange */
+    --button-bg-light: #e9ecef;
+    --button-text-light: #495057;
+    --button-hover-bg-light: #dee2e6;
+    --header-bg-light: #ffffff;
+
+    /* Dark Mode Colors - Defined but applied via [data-theme='dark'] */
+    --bg-body-dark: #1a1a1a; /* Darker gray */
+    --text-body-dark: #f8f9fa;
+    --bg-section1-dark: #00008b; /* Deep Blue */
+    --text-section1-dark: #e6f0ff; /* Light text for deep blue */
+    --bg-section2-dark: #5c4033; /* Dark Brown */
+    --text-section2-dark: #ffe8d6; /* Light text for dark brown */
+    --button-bg-dark: #343a40;
+    --button-text-dark: #f8f9fa;
+    --button-hover-bg-dark: #495057;
+    --header-bg-dark: #212529;
+}
+
+/* Apply Light Mode Colors by Default */
+body {
+    background-color: var(--bg-body-light);
+    color: var(--text-body-light);
+}
+
+.site-header {
+    background-color: var(--header-bg-light);
+}
+
+.section-1 {
+    background-color: var(--bg-section1-light);
+    color: var(--text-section1-light);
+}
+
+.section-2 {
+    background-color: var(--bg-section2-light);
+    color: var(--text-section2-light);
+}
+
+#mode-toggle {
+    background-color: var(--button-bg-light);
+    color: var(--button-text-light);
+}
+#mode-toggle:hover {
+    background-color: var(--button-hover-bg-light);
+}
+
+
+/* Apply Dark Mode Colors when data-theme='dark' */
+html[data-theme='dark'] body {
+    background-color: var(--bg-body-dark);
+    color: var(--text-body-dark);
+}
+
+html[data-theme='dark'] .site-header {
+    background-color: var(--header-bg-dark);
+}
+
+html[data-theme='dark'] .section-1 {
+    background-color: var(--bg-section1-dark);
+    color: var(--text-section1-dark);
+}
+
+html[data-theme='dark'] .section-2 {
+    background-color: var(--bg-section2-dark);
+    color: var(--text-section2-dark);
+}
+
+html[data-theme='dark'] #mode-toggle {
+    background-color: var(--button-bg-dark);
+    color: var(--button-text-dark);
+}
+html[data-theme='dark'] #mode-toggle:hover {
+    background-color: var(--button-hover-bg-dark);
+}
+
+/* --- Layout & General Styling --- */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Transition for header background */
+    transition: background-color 0.3s ease;
+}
+
+.site-header h1 {
+    font-size: 1.5rem;
+}
+
+#mode-toggle {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    /* Transition for button colors and hover */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+main {
+    padding: 1rem; /* Padding around the main content area */
+}
+
+.colorful-section {
+    padding: 2rem; /* Default padding */
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    /* Transition for section background and text colors */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.colorful-section:last-child {
+    margin-bottom: 0;
+}
+
+.colorful-section h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.colorful-section p {
+    margin-bottom: 0.5rem;
+}
+
+
+/* --- Responsive Design --- */
+@media (min-width: 768px) {
+    /* Increase padding on larger screens if desired */
+    .colorful-section {
+        padding: 3rem;
+    }
+    main {
+        padding: 2rem;
+    }
+    .site-header {
+        padding: 1rem 4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Adjust padding for smaller mobile screens */
+    .site-header {
+        padding: 0.8rem 1rem;
+        flex-direction: column; /* Stack header items on very small screens */
+        gap: 0.5rem;
+    }
+    .site-header h1 {
+        font-size: 1.2rem;
+    }
+    main {
+        padding: 0.5rem;
+    }
+     .colorful-section {
+        padding: 1.5rem; /* Slightly reduce padding */
+    }
+}</style>
+    <link rel="stylesheet" href="style.css">
     <script>
         function getBrowserInfo() {
             var userAgent = navigator.userAgent;
@@ -36,11 +193,97 @@
     </script>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p id="browserInfo"></p>
+    <header class="site-header">
+        <h1>Colorful Page</h1>
+        <button id="mode-toggle" aria-label="Toggle dark/light mode">
+            Toggle Mode
+        </button>
+    </header>
+
+    <main>
+        
+        <h5 id="browserInfo"></h5>
+        <section class="colorful-section section-1">
+            <h2>Section 1</h2>
+            <p>This section has a light blue background in light mode and a deep blue background in dark mode. The text color adjusts automatically for readability.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </section>
+
+        <section class="colorful-section section-2">
+            <h2>Section 2</h2>
+            <p>This section uses light orange in light mode and dark brown in dark mode. Contrast is maintained for the text here as well.</p>
+            <p>Quisquam voluptatum Amet laudantium Nemo.</p>
+        </section>
+    </main>
     <script>
         document.getElementById('browserInfo').innerText = getBrowserInfo();
         console.log(getBrowserInfo());
     </script>
+<script>
+const toggleButton = document.getElementById('mode-toggle');
+const htmlElement = document.documentElement; // Target the <html> element
+
+// Function to apply the theme
+function applyTheme(theme) {
+    htmlElement.setAttribute('data-theme', theme);
+    // Update button text based on the current theme
+    if (theme === 'dark') {
+        toggleButton.textContent = 'Switch to Light Mode';
+        toggleButton.setAttribute('aria-label', 'Switch to light mode');
+    } else {
+        toggleButton.textContent = 'Switch to Dark Mode';
+        toggleButton.setAttribute('aria-label', 'Switch to dark mode');
+    }
+    // Save the user's preference to localStorage
+    localStorage.setItem('theme', theme);
+}
+
+// Function to toggle between light and dark mode
+function toggleTheme() {
+    const currentTheme = htmlElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+}
+
+// --- Initialization ---
+
+// 1. Check localStorage for a saved theme preference
+const savedTheme = localStorage.getItem('theme');
+
+// 2. Check system preference
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+let initialTheme = 'light'; // Default to light
+
+if (savedTheme) {
+    // Use saved theme if available
+    initialTheme = savedTheme;
+} else if (prefersDarkScheme.matches) { 
+    // Otherwise, use system preference
+    initialTheme = 'dark';
+}
+
+// Apply the determined initial theme
+applyTheme(initialTheme);
+
+// Add event listener to the toggle button
+toggleButton.addEventListener('click', toggleTheme);
+
+// Optional: Listen for changes in system preference *if* no user preference is saved
+// This part is slightly more complex as it should ideally only apply
+// if the user hasn't manually overridden the theme yet.
+// For simplicity, the core requirement is met by checking on load.
+// If you want it to auto-update *while the page is open* when system settings change
+// (and localStorage is not set), you could add:
+/*
+prefersDarkScheme.addEventListener('change', (e) => {
+    // Only apply system preference change if localStorage is not set
+    if (!localStorage.getItem('theme')) {
+        applyTheme(e.matches ? 'dark' : 'light');
+    }
+});
+*/
+</script>
+    <script src="script.js"></script>
 </body>
 </html>
