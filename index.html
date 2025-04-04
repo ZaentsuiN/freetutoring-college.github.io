@@ -2,37 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.3, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.3, maximum-scale=1.3, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>Two Colorful Sections</title>
     <style>/* Basic Reset & Defaults */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@400;700&family=Audiowide&display=swap');
+
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
+
 body {
-    font-family: sans-serif;
+    font-family: 'Exo 2', sans-serif;
     line-height: 1.68;
     /* Transitions applied to body for smooth global changes */
     transition: background-color 0.3s ease, color 0.3s ease;
     margin: 0 auto;
 }
-
+#back-to-top {
+    font-family: 'Audiowide', cursive;
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.838); 
+    color: rgb(197, 255, 251); 
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: none;
+    }
+    #back-to-top:hover {
+    background-color: #555;
+    font-weight: bold;
+    }
+        .table-of-contents {
+            font-family: 'Audiowide', cursive;
+            position: fixed;
+            top: 160px;
+            left: 0px;
+            padding: 5.5px;
+            border: 1px dashed #d4ff00;
+            border-radius: 10px;
+            margin: auto;
+            background-color: #605d5dd6; 
+        }
+        .table-of-contents ul {
+	        list-style: none;
+        }
+        .table-of-contents a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+        .table-of-contents a:hover {
+            background: rgba(94, 221, 75, 0.808); 
+            text-decoration: underline;
+            padding: 2px 30px;
+            cursor: pointer;
+        }
 /* --- Color Variables --- */
 :root {
     /* Light Mode Colors */
     --bg-body-light: #f8f9fa;
     --text-body-light: #212529;
-    --bg-section1-light: #add8e6; /* Light Blue */
-    --text-section1-light: #1a2b33; /* Darker text for light blue */
+    --bg-section1-light: #b8deff; /* Light Blue */
+    --text-section1-light: #1a1e44; /* Darker text for light blue */
     --bg-section2-light: #ffdab9; /* Light Orange (Peach Puff) */
-    --text-section2-light: #4d3319; /* Darker text for light orange */
+    --text-section2-light: #7b2012; /* Darker text for light orange */
     --button-bg-light: #e9ecef;
     --button-text-light: #495057;
-    --button-hover-bg-light: #dee2e6;
+    --button-hover-bg-light: #d7d6d6;
     --header-bg-light: #ffffff;
 
     /* Dark Mode Colors - Defined but applied via [data-theme='dark'] */
@@ -40,7 +83,7 @@ body {
     --text-body-dark: #f8f9fa;
     --bg-section1-dark: #00008b; /* Deep Blue */
     --text-section1-dark: #e6f0ff; /* Light text for deep blue */
-    --bg-section2-dark: #5c4033; /* Dark Brown */
+    --bg-section2-dark: #962f1f; /* Dark Brown */
     --text-section2-dark: #ffe8d6; /* Light text for dark brown */
     --button-bg-dark: #343a40;
     --button-text-dark: #f8f9fa;
@@ -69,6 +112,8 @@ body {
 }
 
 #mode-toggle {
+    font-family: 'Audiowide', cursive;
+    text-transform: uppercase;
     background-color: var(--button-bg-light);
     color: var(--button-text-light);
 }
@@ -76,11 +121,17 @@ body {
     background-color: var(--button-hover-bg-light);
 }
 
-
 /* Apply Dark Mode Colors when data-theme='dark' */
 html[data-theme='dark'] body {
     background-color: var(--bg-body-dark);
     color: var(--text-body-dark);
+}
+
+html[data-theme='dark'] .table-of-contents {
+    background-color: #f8f9faaa;
+}
+html[data-theme='dark'] .table-of-contents a {
+    color: #212529c3;
 }
 
 html[data-theme='dark'] .site-header {
@@ -110,14 +161,15 @@ html[data-theme='dark'] #mode-toggle:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     /* Transition for header background */
     transition: background-color 0.3s ease;
 }
 
 .site-header h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    font-family: 'Orbitron', sans-serif;
 }
 
 #mode-toggle {
@@ -184,8 +236,9 @@ main {
     }
      .colorful-section {
         padding: 1.5rem; /* Slightly reduce padding */
-    }
-}</style>
+    } 
+}
+</style>
     <link rel="stylesheet" href="style.css">
     <script>
         function getBrowserInfo() {
@@ -205,17 +258,28 @@ main {
 
     <main> 
         <section class="colorful-section section-1">
-            <h2>Section 1</h2>
+            <h2 id="section1">Section 1</h2>
             <p>This section has a light blue background in light mode and a deep blue background in dark mode. The text color adjusts automatically for readability.</p>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            <h3 id="browserInfo"></h3>
+            <h5 id="browserInfo"></h5>
         </section>
 <div class="info-box">
         <section class="colorful-section section-2">
-            <h2>Section 2</h2>
+            <h2 id="section2">Section 2</h2>
             <p>This section uses light orange in light mode and dark brown in dark mode. Contrast is maintained for the text here as well.</p>
             <p>Quisquam voluptatum Amet laudantium Nemo.</p>
         </section>
+        <div class="table-of-contents">
+            <ul>
+                <li><a href="#section1">Section 1</a></li>
+                <li><a href="#section2">Section 2</a></li>
+                <li><a href="#section3">Section 3</a></li>
+                <li><a href="#section4">Section 4</a></li>
+                <li><a href="#section5">Section 5</a></li>
+            </ul>
+        </div>
+    <button id="back-to-top" title="Back to Top">Back to Top</button>
+
     </main>
     <script>
         function getBrowserAndOSInfo() {
@@ -237,16 +301,20 @@ main {
       }
 
       // Detect operating system (basic detection)
-      if (userAgent.indexOf("Win") !== -1) {
+      if (userAgent.indexOf("Windows") !== -1) {
         os = "Windows";
-      } else if (userAgent.indexOf("Mac") !== -1) {
-        os = "MacOS";
+      } else if (userAgent.indexOf("Macintosh") !== -1) {
+        os = "macOS";
       } else if (userAgent.indexOf("Linux") !== -1) {
         os = "Linux";
       } else if (userAgent.indexOf("Android") !== -1) {
         os = "Android";
-      } else if (userAgent.indexOf("like Mac") !== -1) {
-        os = "iOS";
+      } else if (userAgent.indexOf("iPhone") !== -1) {
+        os = "iOS"; 
+      } else if (userAgent.indexOf("iPad") !== -1) {
+        os = "iPad";
+      } else if (userAgent.indexOf("CrOS") !== -1) {
+        os = "Chrome OS";  
       } else {
         os = "Unknown OS";
       }
@@ -262,6 +330,26 @@ User Agent String: ${userAgent}`;
     console.log(infoText);
     </script>
 <script>
+            // Get the button
+        const backToTopButton = document.getElementById("back-to-top");
+        
+        // Show the button when the user scrolls down 300px from the top
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
+        
+        // Scroll back to the top when the button is clicked
+        backToTopButton.addEventListener("click", function() {
+            // For Safari
+            document.body.scrollTop = 0;
+            // For Chrome, Firefox, IE and Opera
+            document.documentElement.scrollTop = 0;
+        });
+
 const toggleButton = document.getElementById('mode-toggle');
 const htmlElement = document.documentElement; // Target the <html> element
 
@@ -325,7 +413,7 @@ prefersDarkScheme.addEventListener('change', (e) => {
     }
 });
 */
-</script>
+</script> 
     <script src="script.js"></script>
 </body>
 </html>
