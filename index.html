@@ -42,13 +42,13 @@ body {
     }
         .table-of-contents {
             font-family: 'Audiowide', cursive;
-            position: fixed;
             top: 10px;
             left: 0px;
+            position: fixed;
             padding: 5.5px;
             border: 1px dashed #d4ff00;
             border-radius: 10px;
-            margin: 30% auto;
+            margin: auto;
             background-color: #605d5dd6; 
         }
         .table-of-contents ul {
@@ -199,7 +199,6 @@ main {
 
 .colorful-section h2 {
     margin-bottom: 1rem;
-    font-size: 1.8rem;
 }
 
 .colorful-section p {
@@ -254,6 +253,15 @@ main {
         <button id="mode-toggle" aria-label="Toggle dark/light mode">
             Toggle Mode
         </button>
+        <div class="table-of-contents">
+            <ul>
+                <li><a href="#section1">Section 1</a></li>
+                <li><a href="#section2">Section 2</a></li>
+                <li><a href="#section3">Section 3</a></li>
+                <li><a href="#section4">Section 4</a></li>
+                <li><a href="#section5">Section 5</a></li>
+            </ul>
+        </div>
     </header>
 
     <main> 
@@ -269,15 +277,7 @@ main {
             <p>This section uses light orange in light mode and dark brown in dark mode. Contrast is maintained for the text here as well.</p>
             <p>Quisquam voluptatum Amet laudantium Nemo.</p>
         </section>
-        <div class="table-of-contents">
-            <ul>
-                <li><a href="#section1">Section 1</a></li>
-                <li><a href="#section2">Section 2</a></li>
-                <li><a href="#section3">Section 3</a></li>
-                <li><a href="#section4">Section 4</a></li>
-                <li><a href="#section5">Section 5</a></li>
-            </ul>
-        </div>
+        
     <button id="back-to-top" title="Back to Top">Back to Top</button>
 
     </main>
@@ -295,7 +295,9 @@ main {
       } else if (userAgent.indexOf("Safari") !== -1) {
         browser = "Safari";
       } else if (userAgent.indexOf("MSIE") !== -1 || userAgent.indexOf("Trident") !== -1) {
-        browser = "Internet Explorer / Edge (Legacy)";
+        browser = "Internet Explorer";
+      } else if (userAgent.indexOf("Edge") !== -1 || userAgent.indexOf("Edg") !== -1) {
+        browser = "Edge";
       } else {
         browser = "Unknown Browser";
       }
