@@ -1,420 +1,375 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no">
-    <title>Two Colorful Sections</title>
-    <style>/* Basic Reset & Defaults */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@400;700&family=Audiowide&display=swap');
-
-* {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
-}
-
-body {
-    font-family: 'Exo 2', sans-serif;
-    line-height: 1.68;
-    /* Transitions applied to body for smooth global changes */
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin: 0 auto;
-}
-#back-to-top {
-    font-family: 'Audiowide', cursive;
-    position: fixed;
-    bottom: 20px;
-    right: 10px;
-    background-color: #272728bf; 
-    color: rgb(197, 255, 251); 
-    border: none;
-    border-radius: 5px;
-    padding: 5px 8px;
-    cursor: pointer;
-    display: none;
-    } 
-    #back-to-top:hover {
-    background-color: #393940; 
-    font-weight: bold;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <title>Colorful Page</title>
+    <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@400;700&family=Audiowide&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --bg-body: #f8f9fa;
+      --text-body: #212529;
+      --bg-section1: #b8deff;
+      --text-section1: #1a1e44;
+      --bg-section2: #ffdab9;
+      --text-section2: #7b2012;
+      --btn-bg: #e9ecef;
+      --btn-text: #495057;
+      --btn-hover: #d7d6d6;
+      --header-bg: #fff;
+      --bg-tableca: 
     }
-        .table-of-contents {
-            font-family: 'Audiowide', cursive;
-            top: 10px;
-            left: 0px;
-            position: fixed;
-            padding: 5.5px;
-            border: 1px dashed #d4ff00;
-            border-radius: 10px;
-            margin: auto;
-            background-color: #605d5dd6; 
-        }
-        .table-of-contents ul {
-	        list-style: none;
-        }
-        .table-of-contents a {
-            text-decoration: none;
-            color: #ffffff;
-        }
-        .table-of-contents a:hover {
-            background: rgba(94, 221, 75, 0.808); 
-            text-decoration: underline;
-            padding: 2px 30px;
-            cursor: pointer;
-        }
-/* --- Color Variables --- */
-:root {
-    /* Light Mode Colors */
-    --bg-body-light: #f8f9fa;
-    --text-body-light: #212529;
-    --bg-section1-light: #b8deff; /* Light Blue */
-    --text-section1-light: #1a1e44; /* Darker text for light blue */
-    --bg-section2-light: #ffdab9; /* Light Orange (Peach Puff) */
-    --text-section2-light: #7b2012; /* Darker text for light orange */
-    --button-bg-light: #e9ecef;
-    --button-text-light: #495057;
-    --button-hover-bg-light: #d7d6d6;
-    --header-bg-light: #ffffff;
 
-    /* Dark Mode Colors - Defined but applied via [data-theme='dark'] */
-    --bg-body-dark: #1a1a1a; /* Darker gray */
-    --text-body-dark: #f8f9fa;
-    --bg-section1-dark: #00008b; /* Deep Blue */
-    --text-section1-dark: #e6f0ff; /* Light text for deep blue */
-    --bg-section2-dark: #962f1f; /* Dark Brown */
-    --text-section2-dark: #ffe8d6; /* Light text for dark brown */
-    --button-bg-dark: #343a40;
-    --button-text-dark: #f8f9fa;
-    --button-hover-bg-dark: #495057;
-    --header-bg-dark: #212529;
-}
-
-/* Apply Light Mode Colors by Default */
-body {
-    background-color: var(--bg-body-light);
-    color: var(--text-body-light);
-}
-
-.site-header {
-    background-color: var(--header-bg-light);
-}
-
-.section-1 {
-    background-color: var(--bg-section1-light);
-    color: var(--text-section1-light);
-}
-
-.section-2 {
-    background-color: var(--bg-section2-light);
-    color: var(--text-section2-light);
-}
-
-#mode-toggle {
-    font-family: 'Audiowide', cursive;
-    text-transform: uppercase;
-    background-color: var(--button-bg-light);
-    color: var(--button-text-light);
-}
-#mode-toggle:hover {
-    background-color: var(--button-hover-bg-light);
-}
-
-/* Apply Dark Mode Colors when data-theme='dark' */
-html[data-theme='dark'] body {
-    background-color: var(--bg-body-dark);
-    color: var(--text-body-dark);
-}
-
-html[data-theme='dark'] .table-of-contents {
-    background-color: #f8f9faaa;
-}
-html[data-theme='dark'] .table-of-contents a {
-    color: #212529c3;
-}
-
-html[data-theme='dark'] .site-header {
-    background-color: var(--header-bg-dark);
-}
-
-html[data-theme='dark'] .section-1 {
-    background-color: var(--bg-section1-dark);
-    color: var(--text-section1-dark);
-}
-
-html[data-theme='dark'] .section-2 {
-    background-color: var(--bg-section2-dark);
-    color: var(--text-section2-dark);
-}
-
-html[data-theme='dark'] #mode-toggle {
-    background-color: var(--button-bg-dark);
-    color: var(--button-text-dark);
-}
-html[data-theme='dark'] #mode-toggle:hover {
-    background-color: var(--button-hover-bg-dark);
-}
-
-/* --- Layout & General Styling --- */
-.site-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* Transition for header background */
-    transition: background-color 0.3s ease;
-}
-
-.site-header h1 {
-    font-size: 2rem;
-    font-family: 'Orbitron', sans-serif;
-}
-
-#mode-toggle {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    /* Transition for button colors and hover */
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-main {
-    padding: 1rem; /* Padding around the main content area */
-}
-
-.colorful-section {
-    padding: 2rem; /* Default padding */
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    /* Transition for section background and text colors */
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-.colorful-section:last-child {
-    margin-bottom: 0;
-}
-
-.colorful-section h2 {
-    margin-bottom: 1rem;
-}
-
-.colorful-section p {
-    margin-bottom: 0.5rem;
-}
-
-
-/* --- Responsive Design --- */
-@media (min-width: 768px) {
-    /* Increase padding on larger screens if desired */
-    .colorful-section {
-        padding: 3rem;
+    html[data-theme="dark"] {
+      --bg-body: #1a1a1a;
+      --text-body: #f8f9fa;
+      --bg-section1: #00008b;
+      --text-section1: #e6f0ff;
+      --bg-section2: #962f1f;
+      --text-section2: #ffe8d6;
+      --btn-bg: #343a40;
+      --btn-text: #f8f9fa;
+      --btn-hover: #495057;
+      --header-bg: #212529;
+      --bg-tableca: 
     }
-    main {
-        padding: 2rem;
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background: var(--bg-body);
+      color: var(--text-body);
+      transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 200px;
+      background: var(--header-bg);
+      padding: 1rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      transform: translateX(-200px);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.visible {
+      transform: translateX(0px);
+    }
+
+    .sidebar h2 {
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li a {
+      display: block;
+      padding: 0.5rem;
+      color: var(--text-body);
+      text-decoration: none;
+      border-radius: 8px;
+    }
+    .sidebar ul li a:hover {
+      background-color: var(--btn-hover);
+    }
+
+    .toggle-btn {
+      position: fixed;
+      top: 10px;
+      left: 150px;
+      padding: 5px 1px;
+      color: var(--text-body);
+      background: var(--header-bg);
+      border: none;
+      border-radius: 25%; 
+      cursor: pointer;
+      z-index: 1000;
+      font-family: 'Audiowide', cursive;
+    }
+    /* Responsive Design */
+    @media (min-width: 780px) {
+      .sidebar {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 200px;
+      }
+
+      .toggle-btn {
+        display: none;
+      }
+    }
+
+    /* Header */
     .site-header {
-        padding: 1rem 4rem;
+      background: var(--header-bg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 10px 10px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-}
 
-@media (max-width: 480px) {
-    /* Adjust padding for smaller mobile screens */
-    .site-header {
-        padding: 0.8rem 1rem;
-        flex-direction: column; /* Stack header items on very small screens */
-        gap: 0.5rem;
-    }
     .site-header h1 {
-        font-size: 1.2rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
     }
-    main {
-        padding: 0.5rem;
+
+    #mode-toggle {
+      font-family: 'Audiowide', cursive;
+      text-transform: uppercase;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.6s, color 0.6s ease;
     }
-     .colorful-section {
-        padding: 1.5rem; /* Slightly reduce padding */
-    } 
-}
-</style>
+
+    #mode-toggle:hover {
+      background: var(--btn-hover);
+    }
+
+    /* Table of Contents */
+    .table-of-contents {
+      font-family: 'Audiowide', cursive;
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 6px;
+      border: 1px dashed #d4ff00;
+      border-radius: 10px;
+      background: var(--btn-hover);
+      z-index: 999;
+    }
+
+    .table-of-contents ul {
+      list-style: none;
+    }
+
+    .table-of-contents a {
+      color: rgba(96, 93, 93, 0.84);; 
+      text-decoration: none;
+    }
+
+    .table-of-contents a:hover {
+      background: rgba(94, 221, 75, 0.8);
+      text-decoration: underline;
+      padding: 2px 30px;
+    }
+
+    /* Content */
+    .main-content {
+      flex-grow: 1;
+      transition: margin-left 0.3s ease;
+    }
+
+    .colorful-section {
+      padding: 2rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .section-1 {
+      background: var(--bg-section1);
+      color: var(--text-section1);
+    }
+
+    .section-2 {
+      background: var(--bg-section2);
+      color: var(--text-section2);
+    }
+
+    #back-to-top {
+      font-family: 'Audiowide', cursive;
+      position: fixed;
+      bottom: 20px;
+      right: 10px;
+      background: #272728bf;
+      color: #c5fffb;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 8px;
+      cursor: pointer;
+      display: none;
+    }
+
+    #back-to-top:hover {
+      background: #393940;
+      font-weight: bold;
+    }
+  </style>
     <link rel="stylesheet" href="style.css">
-    <script>
-        function getBrowserInfo() {
-            var userAgent = navigator.userAgent;
-            var browserInfo = 'Browser Info: ' + userAgent;
-            return browserInfo;
-        }   
-    </script>
 </head>
 <body>
-    <header class="site-header">
-        <h1>Colorful Page</h1>
-        <button id="mode-toggle" aria-label="Toggle dark/light mode">
-            Toggle Mode
-        </button>
-        <div class="table-of-contents">
-            <ul>
-                <li><a href="#section1">Section 1</a></li>
-                <li><a href="#section2">Section 2</a></li>
-                <li><a href="#section3">Section 3</a></li>
-                <li><a href="#section4">Section 4</a></li>
-                <li><a href="#section5">Section 5</a></li>
-            </ul>
-        </div>
-    </header>
 
-    <main> 
-        <section class="colorful-section section-1">
-            <h2 id="section1">Section 1</h2>
-            <p>This section has a light blue background in light mode and a deep blue background in dark mode. The text color adjusts automatically for readability.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            <h5 id="browserInfo"></h5>
-        </section>
-<div class="info-box">
-        <section class="colorful-section section-2">
-            <h2 id="section2">Section 2</h2>
-            <p>This section uses light orange in light mode and dark brown in dark mode. Contrast is maintained for the text here as well.</p>
-            <p>Quisquam voluptatum Amet laudantium Nemo.</p>
-        </section>
-        
-    <button id="back-to-top" title="Back to Top">Back to Top</button>
-    </main>
-    <script>
-        function getBrowserAndOSInfo() {
-      var userAgent = navigator.userAgent;
-      var browser;
-      var os;
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="#section1">Section 1</a></li>
+        <li><a href="#section2">Section 2</a></li>
+        <li><a href="#section3">Section 3</a></li>
+        <li><a href="#section4">Section 4</a></li> 
+        <li><a href="#section5">Section 5</a></li>
+      </ul>
+      <nav class="table-of-contents">
+        <ul>
+          <li><a href="#section1">Section 1</a></li>
+          <li><a href="#section2">Section 2</a></li>
+          <li><a href="#section3">Section 3</a></li>
+          <li><a href="#section4">Section 4</a></li> 
+          <li><a href="#section5">Section 5</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-      // Detect browser (basic detection)
-      if (userAgent.indexOf("Firefox") !== -1) {
-        browser = "Mozilla Firefox";
-      } else if (userAgent.indexOf("Chrome") !== -1) {
-        browser = "Google Chrome";
-      } else if (userAgent.indexOf("Safari") !== -1) {
-        browser = "Safari";
-      } else if (userAgent.indexOf("MSIE") !== -1 || userAgent.indexOf("Trident") !== -1) {
-        browser = "Internet Explorer";
-      } else if (userAgent.indexOf("Edge") !== -1 || userAgent.indexOf("Edg") !== -1) {
-        browser = "Edge";
-      } else {
-        browser = "Unknown Browser";
+    <div class="main-content" id="main-content">
+      <!-- Header -->
+      <header class="site-header">
+        <h3>Colorful Page</h3>
+        <button id="mode-toggle" aria-label="Toggle dark/light mode">Toggle Mode</button>
+      </header>
+
+      <!-- Table of Contents -->
+      
+
+      <!-- Main Colorful Sections -->
+      <section class="colorful-section section-1" id="section1">
+        <h2>Section 1</h2>
+        <p>This section has a light blue background in light mode and deep blue in dark mode.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+         <p id="browserInfo"></p>
+      </section>
+
+      <section class="colorful-section section-2" id="section2">
+        <h2>Section 2</h2>
+        <p>Uses light orange in light mode and dark brown in dark mode.</p>
+        <p>Quisquam voluptatum amet laudantium nemo.</p> 
+        <h5 id="ua"></h5>
+      </section>
+
+      <button id="back-to-top" title="Back to Top">Back to Top</button>
+      <button class="toggle-btn" onclick="toggleSidebar()"></span>☰</button>
+    </div>
+  </div>
+
+  <script>
+    // Sidebar toggle
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('visible');
+    }
+
+    // Dark/Light mode
+    const toggleButton = document.getElementById('mode-toggle');
+    const htmlElement = document.documentElement;
+
+    function applyTheme(theme) {
+      htmlElement.setAttribute('data-theme', theme);
+      toggleButton.textContent = theme === 'dark' ? ' Light Mode' : ' Dark Mode';
+      toggleButton.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+      const current = htmlElement.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    let initialTheme = savedTheme || (prefersDarkScheme.matches ? 'dark' : 'light');
+    applyTheme(initialTheme);
+    toggleButton.addEventListener('click', toggleTheme);
+
+    // Back to Top
+    const backToTopButton = document.getElementById("back-to-top");
+
+    window.onscroll = function () {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      backToTopButton.style.display = scrollTop > 200 ? "block" : "none";
+    };
+
+    backToTopButton.addEventListener("click", () => {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    });
+    // ===== Browser & OS Info =====
+function getBrowserAndOSInfo() {
+  const ua = navigator.userAgent;
+  document.getElementById("ua").textContent = `User Agent String: ${navigator.userAgent}`;
+
+  const browser = /Edg\//.test(ua) ? "Microsoft Edge (Chromium)" :
+                  /Edge/.test(ua) ? "Microsoft Edge (Legacy)" :
+                  /EdgA/.test(ua) ? "Microsoft Edge (Android)" :
+                  /EdgiOS/.test(ua) ? "Microsoft Edge (iOS)" :
+                  /OPR|Opera/.test(ua) ? "Opera" :
+                  /Vivaldi/.test(ua) ? "Vivaldi" :
+                  /Brave\//.test(ua) || navigator.brave ? "Brave" :
+  /Chrome/.test(ua) && !/Edg/.test(ua) && !/OPR/.test(ua) && !/Chromium/.test(ua) ? "Google Chrome" :
+                  /Safari/.test(ua) && !/Chrome|Chromium/.test(ua) ? "Safari" :
+                  /Firefox/.test(ua) ? "Mozilla Firefox" :
+                  /SamsungBrowser/.test(ua) ? "Samsung Internet" :
+                  /MSIE|Trident/.test(ua) ? "Internet Explorer" :
+                  /CriOS/.test(ua) ? "Chrome (iOS)" :
+                  /FxiOS/.test(ua) ? "Firefox (iOS)" :
+                  "Unknown Browser";
+
+  const os = /Windows NT 10/.test(ua) ? "Windows" :
+             /Windows NT 6.3/.test(ua) ? "Windows 8.1" :
+             /Windows NT 6.2/.test(ua) ? "Windows 8" :
+             /Windows NT 6.1/.test(ua) ? "Windows 7" :
+             /Windows NT 6.0/.test(ua) ? "Windows Vista" :
+             /Windows NT 5.1/.test(ua) ? "Windows XP" :
+             /Mac OS X 10[._]\d+/.test(ua) ? "macOS" :
+             /Android/.test(ua) ? "Android" :
+             /iPhone/.test(ua) ? "iPhone (iOS)" :
+             /iPad/.test(ua) ? "iPad (iOS)" :
+             /Linux/.test(ua) && !/Android/.test(ua) ? "Linux" :
+             /CrOS/.test(ua) ? "Chrome OS" :
+             "Unknown OS User Agent String: ${ua}` ";
+
+  return `You are using ${browser} on ${os}.`;
+}
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const infoElement = document.getElementById('browserInfo');
+      if (infoElement) {
+        infoElement.textContent = getBrowserAndOSInfo();
       }
-
-      // Detect operating system (basic detection)
-      if (userAgent.indexOf("Windows") !== -1) {
-        os = "Windows";
-      } else if (userAgent.indexOf("Macintosh") !== -1) {
-        os = "macOS";
-      } else if (userAgent.indexOf("Linux") !== -1) {
-        os = "Linux";
-      } else if (userAgent.indexOf("Android") !== -1) {
-        os = "Android";
-      } else if (userAgent.indexOf("iPhone") !== -1) {
-        os = "iOS"; 
-      } else if (userAgent.indexOf("iPad") !== -1) {
-        os = "iPad";
-      } else if (userAgent.indexOf("CrOS") !== -1) {
-        os = "Chrome OS";  
-      } else {
-        os = "Unknown OS";
-      }
-
-      // Return a string containing the information
-      return `You are using ${browser} on ${os}. 
-User Agent String: ${userAgent}`;
-    }
-
-    // Display the info on the page and in the console
-    var infoText = getBrowserAndOSInfo();
-    document.getElementById('browserInfo').innerText = infoText;
-    console.log(infoText);
-    </script>
-<script>
-            // Get the button
-        const backToTopButton = document.getElementById("back-to-top");
-        
-        // Show the button when the user scrolls down 300px from the top
-        window.onscroll = function() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                backToTopButton.style.display = "block";
-            } else {
-                backToTopButton.style.display = "none";
-            }
-        };
-        
-        // Scroll back to the top when the button is clicked
-        backToTopButton.addEventListener("click", function() {
-            // For Safari
-            document.body.scrollTop = 0;
-            // For Chrome, Firefox, IE and Opera
-            document.documentElement.scrollTop = 0;
-        });
-
-const toggleButton = document.getElementById('mode-toggle');
-const htmlElement = document.documentElement; // Target the <html> element
-
-// Function to apply the theme
-function applyTheme(theme) {
-    htmlElement.setAttribute('data-theme', theme);
-    // Update button text based on the current theme
-    if (theme === 'dark') {
-        toggleButton.textContent = 'Switch to Light Mode';
-        toggleButton.setAttribute('aria-label', 'Switch to light mode');
-    } else {
-        toggleButton.textContent = 'Switch to Dark Mode';
-        toggleButton.setAttribute('aria-label', 'Switch to dark mode');
-    }
-    // Save the user's preference to localStorage
-    localStorage.setItem('theme', theme);
-}
-
-// Function to toggle between light and dark mode
-function toggleTheme() {
-    const currentTheme = htmlElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    applyTheme(newTheme);
-}
-
-// --- Initialization ---
-
-// 1. Check localStorage for a saved theme preference
-const savedTheme = localStorage.getItem('theme');
-
-// 2. Check system preference
-const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-let initialTheme = 'light'; // Default to light
-
-if (savedTheme) {
-    // Use saved theme if available
-    initialTheme = savedTheme;
-} else if (prefersDarkScheme.matches) { 
-    // Otherwise, use system preference
-    initialTheme = 'dark';
-}
-
-// Apply the determined initial theme
-applyTheme(initialTheme);
-
-// Add event listener to the toggle button
-toggleButton.addEventListener('click', toggleTheme);
-
-// Optional: Listen for changes in system preference *if* no user preference is saved
-// This part is slightly more complex as it should ideally only apply
-// if the user hasn't manually overridden the theme yet.
-// For simplicity, the core requirement is met by checking on load.
-// If you want it to auto-update *while the page is open* when system settings change
-// (and localStorage is not set), you could add:
-/*
-prefersDarkScheme.addEventListener('change', (e) => {
-    // Only apply system preference change if localStorage is not set
-    if (!localStorage.getItem('theme')) {
-        applyTheme(e.matches ? 'dark' : 'light');
-    }
-});
-*/
-</script> 
-    <script src="script.js"></script>
+    });
+  </script>
+  </script>
 </body>
 </html>
