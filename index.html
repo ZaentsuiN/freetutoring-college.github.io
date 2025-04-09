@@ -6,13 +6,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f30d.svg" />
   <title>Colorful Page</title>
     <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@400;700&family=Audiowide&display=swap" rel="stylesheet">
 <style>
     :root {
-      --bg-body: #f8f9fa;
-      --text-body: #212529;
+      --bg-body: #ffffff;
+      --text-body: #111;
       --bg-section1: #b8deff;
       --text-section1: #1a1e44;
       --bg-section2: #ffdab9;
@@ -21,7 +22,6 @@
       --btn-text: #495057;
       --btn-hover: #d7d6d6;
       --header-bg: #fff;
-      --bg-tableca: 
     }
 
     html[data-theme="dark"] {
@@ -35,33 +35,34 @@
       --btn-text: #f8f9fa;
       --btn-hover: #495057;
       --header-bg: #212529;
-      --bg-tableca: 
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      scroll-behavior: smooth;
     }
-
     body {
-      font-family: 'Exo 2', sans-serif;
+      font-family: 'Exo 2', 'Segoe UI', sans-serif;
       background: var(--bg-body);
       color: var(--text-body);
       transition: background 0.3s, color 0.3s;
       min-height: 100vh;
+      margin: 0;
     }
-
-    .container {
+    .container{
       display: flex;
       flex-direction: column;
+      margin: 0 auto;
     }
 
     /* Sidebar */
     .sidebar {
+      font-family: 'Audiowide', cursive;
       width: 200px;
       background: var(--header-bg);
-      padding: 1rem;
+      padding: 6px;
       position: fixed;
       top: 0;
       left: 0;
@@ -77,7 +78,7 @@
 
     .sidebar h2 {
       font-family: 'Orbitron', sans-serif;
-      margin-bottom: 1rem;
+      margin-bottom: 10px;
     }
 
     .sidebar ul {
@@ -93,23 +94,29 @@
     }
     .sidebar ul li a:hover {
       background-color: var(--btn-hover);
+      padding: 6px 38px;
+      text-decoration: underline;
     }
-
     .toggle-btn {
       position: fixed;
-      top: 10px;
-      left: 150px;
-      padding: 5px 1px;
-      color: var(--text-body);
-      background: var(--header-bg);
+      top: 1em;
+      right: 160px;
+      padding: 7px 1px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
       border: none;
-      border-radius: 25%; 
       cursor: pointer;
       z-index: 1000;
       font-family: 'Audiowide', cursive;
+      border-radius: 20px;
     }
     /* Responsive Design */
-    @media (min-width: 780px) {
+    @media (max-width: 768px) {
+      [role="tablist"] {
+        flex-direction: column;
+      }
+    }
+    @media (min-width: 700px) {
       .sidebar {
         transform: translateX(0);
       }
@@ -122,7 +129,58 @@
         display: none;
       }
     }
+    [role="tablist"] {
+      display: flex;
+      gap: 4px;
+      border-bottom: 2px solid var(--primary-color);
+      margin-top: 40px;
+    }
 
+    [role="tab"] {
+      padding: 10px 18px;
+      font-weight: bold;
+      background: #eee;
+      color: #000;
+      border: none;
+      border-radius: 5px 5px 0 0;
+      cursor: pointer;
+      font-family: 'Audiowide', sans-serif;
+    }
+
+    [role="tab"][aria-selected="true"] {
+      background: var(--bg-color);
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--bg-color);
+    }
+
+    [role="tabpanel"] {
+      padding: 20px;
+      border: 2px solid var(--primary-color);
+      border-radius: 0 0 10px 10px;
+      margin-bottom: 30px;
+      margin-top: -2px;
+    }
+
+    .gradio-mockup {
+      width: 100%;
+      height: 300px;
+      background: linear-gradient(to bottom, #ddd, #fff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: 1px solid #aaa;
+    }
+    .browser-info {
+      background: var(--section2-color);
+      padding: 15px;
+      border-radius: 8px;
+      font-family: monospace;
+    }
     /* Header */
     .site-header {
       background: var(--header-bg);
@@ -136,9 +194,8 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .site-header h1 {
+    h1, h2 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
     }
 
     #mode-toggle {
@@ -146,10 +203,11 @@
       text-transform: uppercase;
       background: var(--btn-bg);
       color: var(--btn-text);
-      padding: 0.5rem 1rem;
+      padding: 8px 16px;
       border: none;
-      border-radius: 20px;
       cursor: pointer;
+      float: right;
+      border-radius: 20px;
       font-weight: bold;
       transition: background 0.6s, color 0.6s ease;
     }
@@ -167,8 +225,7 @@
       padding: 6px;
       border: 1px dashed #d4ff00;
       border-radius: 10px;
-      background: var(--btn-hover);
-      z-index: 999;
+      background: rgba(94, 221, 75, 0.8);
     }
 
     .table-of-contents ul {
@@ -176,7 +233,7 @@
     }
 
     .table-of-contents a {
-      color: rgba(96, 93, 93, 0.84);; 
+      color: rgba(96, 93, 93, 0.84);
       text-decoration: none;
     }
 
@@ -202,11 +259,13 @@
     .section-1 {
       background: var(--bg-section1);
       color: var(--text-section1);
+      line-height: 1.6;
     }
 
     .section-2 {
       background: var(--bg-section2);
       color: var(--text-section2);
+      line-height: 1.6;
     }
 
     #back-to-top {
@@ -227,49 +286,72 @@
       background: #393940;
       font-weight: bold;
     }
+  .footer {
+    text-align: right;
+    padding: 2px 1px;
+    margin-top: 0px;
+    bottom: 0px;
+    box-shadow: 0px -2px 10px rgba(0,0,0,0.2);
+}
+	.footer p {
+		margin: 0px;
+		font-size: 0.8em;
+    padding: 10px;
+    margin-top: auto;
+	  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); 
+    border-bottom: 5px dashed #66cc66;
+}
   </style>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <div class="container">
     <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <h3>Navigation</h3>
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main Navigation">
+      <h2>Navigation</h2>
       <ul>
-        <li><a href="#section1">Section 1</a></li>
+        <li><a href="#section1" aria-current="page">Section 1</a></li>
         <li><a href="#section2">Section 2</a></li>
-        <li><a href="#section3">Section 3</a></li>
-        <li><a href="#section4">Section 4</a></li> 
-        <li><a href="#section5">Section 5</a></li>
-      </ul>
-      <nav class="table-of-contents">
-        <ul>
-          <li><a href="#section1">Section 1</a></li>
-          <li><a href="#section2">Section 2</a></li>
-          <li><a href="#section3">Section 3</a></li>
-          <li><a href="#section4">Section 4</a></li> 
-          <li><a href="#section5">Section 5</a></li>
-        </ul>
-      </nav>
+      </ul> 
     </aside>
-
     <div class="main-content" id="main-content">
-      <!-- Header -->
       <header class="site-header">
-        <h3>Colorful Page</h3>
+        <h1>Colorful Page</h1>
         <button id="mode-toggle" aria-label="Toggle dark/light mode">Toggle Mode</button>
+        <button class="toggle-btn" onclick="toggleSidebar()" aria-label="Sidebar">☰</button>
       </header>
+<!-- Tabs -->
+    <div role="tablist" aria-label="Main Tabs">
+      <button role="tab" id="tab-chat" aria-selected="true" aria-controls="panel-chat">💬 Chat</button>
+      <button role="tab" id="tab-iframe" aria-selected="false" aria-controls="panel-iframe">🌍 Iframe</button>
+      <button role="tab" id="tab-gradio" aria-selected="false" aria-controls="panel-gradio">🤖 Gradio</button>
+      <button role="tab" id="tab-info" aria-selected="false" aria-controls="panel-info">🧠 System Info</button>
+    </div>
 
-      <!-- Table of Contents -->
-      
+        <!-- Panels -->
+    <div role="tabpanel" id="panel-chat" aria-labelledby="tab-chat">
+      <h2>Chat Panel</h2>
+      <p>This is the chat interface. Type your messages here:</p>
+      <textarea rows="5" cols="60" placeholder="Type a message..."></textarea>
+    </div>
 
+    <div role="tabpanel" id="panel-iframe" aria-labelledby="tab-iframe" hidden>
+      <h2>Resizable Iframe</h2>
+      <iframe id="myIframe" src="https://zaentsuin.github.io/freetutoring-college.github.io/" title="Example Site"></iframe>
+    </div>
+
+    <div role="tabpanel" id="panel-gradio" aria-labelledby="tab-gradio" hidden>
+      <h2>Gradio App Mockup</h2>
+      <div class="gradio-mockup">
+        <img src="https://picsum.photos/500/350" alt="Mock Gradio Interface" />
+      </div>
+    </div>
       <!-- Main Colorful Sections -->
       <section class="colorful-section section-1" id="section1">
         <h2>Section 1</h2>
         <p>This section has a light blue background in light mode and deep blue in dark mode.</p>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-         <p id="browserInfo"></p>
+         <h5 id="browserInfo"></h5>
       </section>
 
       <section class="colorful-section section-2" id="section2">
@@ -277,14 +359,44 @@
         <p>Uses light orange in light mode and dark brown in dark mode.</p>
         <p>Quisquam voluptatum amet laudantium nemo.</p> 
         <h5 id="ua"></h5>
+        <h5 id="platform"></h5>
       </section>
-
       <button id="back-to-top" title="Back to Top">Back to Top</button>
-      <button class="toggle-btn" onclick="toggleSidebar()"></span>☰</button>
     </div>
+    
+      <!-- JS LOGIC 
+<nav class="table-of-contents">
+        <ul>
+          <li><a href="#section1">Section 1</a></li>
+          <li><a href="#section2">Section 2</a></li>
+          <li><a href="#section3">Section 3</a></li>
+          <li><a href="#section4">Section 4</a></li> 
+          <li><a href="#section5">Section 5</a></li>
+        </ul>
+      </nav> -->
   </div>
-
+<footer class="footer">
+    <p>© 2025 Your Name. All rights reserved.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.1/iframeResizer.min.js"></script>
   <script>
+    // Tab logic
+    const tabs = document.querySelectorAll('[role="tab"]');
+    const panels = document.querySelectorAll('[role="tabpanel"]');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+        panels.forEach(p => p.hidden = true);
+
+        tab.setAttribute('aria-selected', 'true');
+        const targetPanel = document.getElementById(tab.getAttribute('aria-controls'));
+        targetPanel.hidden = false;
+      });
+    });
+    // Iframe Resizer
+    iFrameResize({ log: false }, '#myIframe');
+
     // Sidebar toggle
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
@@ -297,7 +409,7 @@
 
     function applyTheme(theme) {
       htmlElement.setAttribute('data-theme', theme);
-      toggleButton.textContent = theme === 'dark' ? ' Light Mode' : ' Dark Mode';
+      toggleButton.innerHTML = theme === 'dark' ? '<span aria-hidden="true">☀️</span> Light Mode' : '<span aria-hidden="true">🌑</span> Dark Mode';
       toggleButton.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
       localStorage.setItem('theme', theme);
     }
@@ -325,10 +437,30 @@
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     });
-    // ===== Browser & OS Info =====
+document.addEventListener("DOMContentLoaded", function () {
+  const tocList = document.createElement('ul');
+  document.querySelectorAll('.main-content h2').forEach((sectionHeading) => {
+    const id = sectionHeading.id || sectionHeading.textContent.toLowerCase().replace(/\s+/g, '-');
+    sectionHeading.id = id;
+    const link = document.createElement('a');
+    link.href = `#${id}`;
+    link.textContent = sectionHeading.textContent;
+    const li = document.createElement('li');
+    li.appendChild(link);
+    tocList.appendChild(li);
+  });
+
+  const tocContainer = document.querySelector('.table-of-contents');
+  if (tocContainer) tocContainer.appendChild(tocList);
+});
+
+    // ===== Browser & OS Info ===== 
 function getBrowserAndOSInfo() {
+  const platform = navigator.platform;
   const ua = navigator.userAgent;
   document.getElementById("ua").textContent = `User Agent String: ${navigator.userAgent}`;
+  document.getElementById("platform").textContent = `${navigator.platform}`;
+  
 
   const browser = /Edg\//.test(ua) ? "Microsoft Edge (Chromium)" :
                   /Edge/.test(ua) ? "Microsoft Edge (Legacy)" :
@@ -367,9 +499,8 @@ function getBrowserAndOSInfo() {
       const infoElement = document.getElementById('browserInfo');
       if (infoElement) {
         infoElement.textContent = getBrowserAndOSInfo();
-      }
+      } 
     });
-  </script>
   </script>
 </body>
 </html>
